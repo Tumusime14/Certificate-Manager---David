@@ -1,2 +1,2 @@
 # Certificate-Manager-David
-This is a react js project thit implements and maintain certificates data.
+This is a React JS project that implements and maintains certificate data.
