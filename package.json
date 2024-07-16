@@ -10,8 +10,8 @@
     "lint:fix": "eslint --ext .tsx,.ts --fix src",
     "test": "jest src"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["certificate", "management", "react", "typescript"],
+  "author": "tumusimedavid14@gmail.com",
   "license": "ISC",
   "dependencies": {
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
@@ -41,5 +41,9 @@
     "pre-commit": "npm lint",
     "pre-push": "npm test"
     }
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Tumusime14/Certificate-Manager---David.git"
     }
    }
