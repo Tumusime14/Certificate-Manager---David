@@ -6,11 +6,18 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "type-check": "tsc --noEmit",
     "lint": "eslint --ext .tsx,.ts src",
     "lint:fix": "eslint --ext .tsx,.ts --fix src",
-    "test": "jest src"
+    "test": "jest",
+    "ci": "npm run lint && npm run type-check && npm test"
   },
-  "keywords": ["certificate", "management", "react", "typescript"],
+  "keywords": [
+    "certificate",
+    "management",
+    "react",
+    "typescript"
+  ],
   "author": "tumusimedavid14@gmail.com",
   "license": "ISC",
   "dependencies": {
@@ -36,15 +43,14 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
   },
-    "husky": {
+  "husky": {
     "hooks": {
-    "pre-commit": "npm lint",
-    "pre-push": "npm test"
+      "pre-commit": "npm lint",
+      "pre-push": "npm test"
     }
-    },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/Tumusime14/Certificate-Manager---David.git"
-    }
-   }
-
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tumusime14/Certificate-Manager---David.git"
+  }
+}
