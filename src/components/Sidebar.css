@@ -1,0 +1,35 @@
+.sidebar {
+    width: 200px;
+    background-color: #E7E9EA;
+    padding: 10px;
+    height: 100vh;
+  }
+  
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .menu-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .dropdown {
+    padding-left: 20px;
+  }
+  
+  .dropdown-item {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #e0e0e0;
+  }
+  

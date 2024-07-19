@@ -1,0 +1,23 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .header {
+    background-color: #3F9AC9;
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
