@@ -17,6 +17,10 @@ module.exports = {
         enforce: 'pre',
         use: ['source-map-loader'],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
@@ -37,8 +41,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
+    new CleanWebpackPlugin(), 
   ],
 };
+
 
 
 
