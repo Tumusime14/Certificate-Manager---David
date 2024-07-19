@@ -8,6 +8,8 @@ import Example3 from "./components/Example3";
 import NewCertificate from "./components/NewCertificate"; 
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
+  const [title, setTitle] = useState<string>("Start");
+
   return (
     <Router>
       <div className="App">
