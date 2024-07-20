@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import Home from "../components/icons/home";
 import Menu from "../components/icons/menu";
+import Down from "../components/icons/down";
 
 interface SidebarProps {
   setTitle: (title: string) => void;
@@ -9,14 +10,21 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ setTitle }) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  
+  const [isExpanded, setisExpanded] = useState<boolean>(false);
+  const handleClick = () =>{
+    setShowDropdown(!showDropdown)  
+    setisExpanded( (prev) => !prev)
+  }
 
   return (
     <div className="sidebar">
       <div className="menu-item" onClick={() => setTitle("Start")}>
         <Home /> Start
       </div>
-      <div className="menu-item" onClick={() => setShowDropdown(!showDropdown)}>
-        <Menu /> Machine Learning
+      <div className="menu-item" onClick={() => handleClick() }>
+                  <Menu />Machine Learning <Down className={`downicon ${isExpanded ? "rotated":""}`}/>
+       
       </div>
       {showDropdown && (
         <div className="dropdown">
@@ -36,3 +44,4 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle }) => {
 };
 
 export default Sidebar;
+

@@ -1,35 +1,45 @@
 .sidebar {
-    width: 200px;
-    background-color: #E7E9EA;
-    padding: 10px;
-    height: 100vh;
-  }
-  
-  .menu-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .menu-item:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .icon {
-    margin-right: 10px;
-  }
-  
-  .dropdown {
-    padding-left: 20px;
-  }
-  
-  .dropdown-item {
-    padding: 5px 0;
-    cursor: pointer;
-  }
-  
-  .dropdown-item:hover {
-    background-color: #e0e0e0;
-  }
-  
+  width: 300px;
+  background-color: #E7E9EA;
+  padding: 10px;
+  height: 100vh;
+  color: #265c79;
+}
+
+.menu-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.downicon.rotated{
+translate: 1s ease;
+transform: rotate(180deg);
+}
+
+.menu-item:hover {
+  background-color: #e0e0e0;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.dropdown {
+  padding-left: 20px;
+  color: #265c79;
+}
+
+.dropdown-item {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0;
+}
+
+

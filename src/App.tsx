@@ -7,7 +7,7 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      <div className="grd">
+      <div className="main-content">
       <div className="header">DCCS Tuzla</div>
       <div className="header1"></div>
       </div>
@@ -17,10 +17,12 @@ const App: FC = () => {
           <h1>{title}</h1>
         </div>
       </div>
+      
     </div>
   );
 };
 
 export default App;
+
 
 
