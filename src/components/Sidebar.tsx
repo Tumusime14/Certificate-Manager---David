@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import Home from "../components/icons/home";
 import Menu from "../components/icons/menu";
+import Down from "../components/icons/down";
 
 interface SidebarProps {
   setTitle: (title: string) => void;
@@ -16,7 +17,8 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle }) => {
         <Home /> Start
       </div>
       <div className="menu-item" onClick={() => setShowDropdown(!showDropdown)}>
-        <Menu /> Machine Learning
+                  <Menu />Machine Learning &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Down/>
+       
       </div>
       {showDropdown && (
         <div className="dropdown">
@@ -36,3 +38,4 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle }) => {
 };
 
 export default Sidebar;
+
