@@ -9,6 +9,7 @@ import NewCertificate from "./components/NewCertificate";
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
   const [title, setTitle] = useState<string>("Start");
+  const [showTable, setShowTable] = useState<boolean>(false);
 
   return (
     <Router>
