@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
+import Home from "../components/icons/home";
+import Menu from "../components/icons/menu";
 
 interface SidebarProps {
   setTitle: (title: string) => void;
@@ -11,10 +13,10 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle }) => {
   return (
     <div className="sidebar">
       <div className="menu-item" onClick={() => setTitle("Start")}>
-        <img src="/home.svg" alt="Home" className="icon" /> Start
+        <Home /> Start
       </div>
       <div className="menu-item" onClick={() => setShowDropdown(!showDropdown)}>
-        <img src="/menu.svg" alt="Menu" className="icon" /> Machine Learning
+        <Menu /> Machine Learning
       </div>
       {showDropdown && (
         <div className="dropdown">

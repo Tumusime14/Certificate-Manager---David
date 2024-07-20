@@ -7,8 +7,9 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      <div className="header">
-        <h1>DCCS Tuzla</h1>
+      <div className="grd">
+      <div className="header">DCCS Tuzla</div>
+      <div className="header1"></div>
       </div>
       <div className="container">
         <Sidebar setTitle={setTitle} />
