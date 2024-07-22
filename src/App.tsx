@@ -15,7 +15,7 @@ const App: FC = () => {
   const handleNewCertificate = () => {
     setShowTable(false);
     setShowNewCertificate(true);
-    setTitle("New Certificate");
+    setTitle("");
   };
 
   return (
