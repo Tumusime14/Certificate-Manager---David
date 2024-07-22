@@ -1,12 +1,16 @@
 import React from 'react';
 import "./Table.css";
+import GearIcon from "./icons/gear"; 
+import TrashIcon from "./icons/trash";
 
 interface TableProps {
   onNewCertificate: () => void;
+  onEdit: (certificate: any) => void;
+  onDelete: (id: number) => void;
   data: any[];
 }
 
-const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
+const Table: React.FC<TableProps> = ({ onNewCertificate, onEdit, onDelete, data }) => {
   return (
     <div>
       <button className="new-certificate-button" onClick={onNewCertificate}>
@@ -19,6 +23,7 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
             <td>Certificate type</td>
             <td>Valid from</td>
             <td>Valid to</td>
+            <td>Actions</td>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +33,10 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
               <td>{row.certificateType}</td>
               <td>{row.validFrom}</td>
               <td>{row.validTo}</td>
+              <td>
+                <button onClick={() => onEdit(row)}><GearIcon /></button>
+                <button onClick={() => onDelete(index)}><TrashIcon /></button>
+              </td>
             </tr>
           ))}
         </tbody>

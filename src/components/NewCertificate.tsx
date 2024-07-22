@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewCertificate.css';
 import Search from "./icons/search";
 import X from "./icons/x";
 
 interface NewCertificateProps {
   onSave: (data: any) => void;
+  initialData?: any; 
 }
 
-const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
+const NewCertificate: React.FC<NewCertificateProps> = ({ onSave, initialData }) => {
   const [pdfPreview, setPdfPreview] = useState<string | ArrayBuffer | null>(null);
   const [formData, setFormData] = useState({
     supplier: '',
@@ -17,6 +18,18 @@ const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
     pdfFile: null as File | null,
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        supplier: initialData.supplier,
+        certificateType: initialData.certificateType,
+        validFrom: initialData.validFrom,
+        validTo: initialData.validTo,
+        pdfFile: null,
+      });
+    }
+  }, [initialData]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -129,14 +142,13 @@ const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
               {pdfPreview ? (
                 <embed src={pdfPreview as string} type="application/pdf" width="100%" height="100%" />
               ) : (
-                <div style={{ textAlign: 'center', lineHeight: '300px', color: '#ccc' }}></div>
+                <div style={{ textAlign: 'center', lineHeight: '300px', color: '#ccc' }}>No PDF Selected</div>
               )}
             </div>
           </div>
-
           <div className="buttons">
-              <button className="save-button" onClick={handleSave}>Save</button>
-              <button className="reset-button" onClick={handleReset}>Reset</button>
+            <button className="save-button" onClick={handleSave}>Save</button>
+            <button className="reset-button" onClick={handleReset}>Reset</button>
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
