@@ -10,6 +10,13 @@ const Start = () => <h1>Start</h1>;
 const App: FC = () => {
   const [title, setTitle] = useState<string>("Start");
   const [showTable, setShowTable] = useState<boolean>(false);
+  const [showNewCertificate, setShowNewCertificate] = useState<boolean>(false);
+
+  const handleNewCertificate = () => {
+    setShowTable(false);
+    setShowNewCertificate(true);
+    setTitle("New Certificate");
+  };
 
   return (
     <Router>
