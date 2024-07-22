@@ -1,11 +1,19 @@
 import React, { FC, useState } from "react";
 import Sidebar from "./components/Sidebar";
-import Table from "./components/Table"; 
+import Table from "./components/Table";
+import NewCertificate from "./components/NewCertificate";
 import "./App.css";
 
 const App: FC = () => {
   const [title, setTitle] = useState<string>("Start");
   const [showTable, setShowTable] = useState<boolean>(false);
+  const [showNewCertificate, setShowNewCertificate] = useState<boolean>(false);
+
+  const handleNewCertificate = () => {
+    setShowTable(false);
+    setShowNewCertificate(true);
+    setTitle("New Certificate");
+  };
 
   return (
     <div className="App">
@@ -14,10 +22,11 @@ const App: FC = () => {
         <div className="header1"></div>
       </div>
       <div className="container">
-        <Sidebar setTitle={setTitle} setShowTable={setShowTable} />
+        <Sidebar setTitle={setTitle} setShowTable={setShowTable} setShowNewCertificate={setShowNewCertificate} />
         <div className="content">
           <h1>{title}</h1>
-          {showTable && <Table />}
+          {showTable && !showNewCertificate && <Table onNewCertificate={handleNewCertificate} />}
+          {showNewCertificate && <NewCertificate />}
         </div>
       </div>
     </div>
@@ -25,6 +34,7 @@ const App: FC = () => {
 };
 
 export default App;
+
 
 
 

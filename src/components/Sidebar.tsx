@@ -7,9 +7,10 @@ import Down from "../components/icons/down";
 interface SidebarProps {
   setTitle: (title: string) => void;
   setShowTable: (show: boolean) => void;
+  setShowNewCertificate: (show: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable }) => {
+const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable, setShowNewCertificate }) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
   return (
@@ -26,7 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable }) => {
             className="dropdown-item"
             onClick={() => {
               setTitle("Example 1");
-              setShowTable(true); 
+              setShowTable(true);
+              setShowNewCertificate(false);
             }}
           >
             Example 1
@@ -36,6 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable }) => {
             onClick={() => {
               setTitle("Example 2");
               setShowTable(false);
+              setShowNewCertificate(false);
             }}
           >
             Example 2
@@ -45,6 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable }) => {
             onClick={() => {
               setTitle("Example 3");
               setShowTable(false);
+              setShowNewCertificate(false);
             }}
           >
             Example 3
@@ -56,5 +60,6 @@ const Sidebar: React.FC<SidebarProps> = ({ setTitle, setShowTable }) => {
 };
 
 export default Sidebar;
+
 
 

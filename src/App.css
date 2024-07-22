@@ -32,6 +32,9 @@
     flex: 1;
     padding: 20px;
   }
+  .TwoSection{
+    background-color: #2196f3;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
