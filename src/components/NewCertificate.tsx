@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './NewCertificate.css';
+import Search from "./icons/search";
+import X from "./icons/x";
 
 const NewCertificate: React.FC = () => {
   const [pdfPreview, setPdfPreview] = useState<string | ArrayBuffer | null>(null);
@@ -61,13 +63,19 @@ const NewCertificate: React.FC = () => {
         <div className="left-side">
           <div className="form-group">
             <label htmlFor="supplier">Supplier</label>
-            <input
-              type="text"
-              id="supplier"
-              name="supplier"
-              value={formData.supplier}
-              onChange={handleInputChange}
-            />
+            <div className="input-with-icons">
+              <input
+                type="text"
+                id="supplier"
+                name="supplier"
+                value={formData.supplier}
+                onChange={handleInputChange}
+              />
+              <div className="icon">
+                <Search />
+                <X />
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="certificateType">Certificate Type</label>
@@ -112,13 +120,15 @@ const NewCertificate: React.FC = () => {
               id="pdfFile"
               accept="application/pdf"
               onChange={handleFileChange}
-              style={{ display: 'none' }} 
-            />
+              style={{ display: 'none' }} />
           
-              <div className="pdf-preview">
+            <div className="pdf-preview">
+              {pdfPreview ? (
                 <embed src={pdfPreview as string} type="application/pdf" width="100%" height="100%" />
-              </div>
-            
+              ) : (
+                <div style={{ textAlign: 'center', lineHeight: '300px', color: '#ccc' }}></div>
+              )}
+            </div>
           </div>
   
           <div className="buttons">

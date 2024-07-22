@@ -8,6 +8,15 @@ import Example3 from "./components/Example3";
 
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
+   const [showTable, setShowTable] = useState<boolean>(false);
+  const [showNewCertificate, setShowNewCertificate] = useState<boolean>(false);
+
+  const handleNewCertificate = () => {
+    setShowTable(false);
+    setShowNewCertificate(true);
+    setTitle("");
+  };
+
   return (
     <Router>
       <div className="App">
