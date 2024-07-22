@@ -3,7 +3,11 @@ import './NewCertificate.css';
 import Search from "./icons/search";
 import X from "./icons/x";
 
-const NewCertificate: React.FC = () => {
+interface NewCertificateProps {
+  onSave: (data: any) => void;
+}
+
+const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
   const [pdfPreview, setPdfPreview] = useState<string | ArrayBuffer | null>(null);
   const [formData, setFormData] = useState({
     supplier: '',
@@ -42,7 +46,7 @@ const NewCertificate: React.FC = () => {
       return;
     }
     setErrorMessage(null);
-    console.log('Data saved:', formData);
+    onSave(formData);
   };
 
   const handleReset = () => {
@@ -121,7 +125,6 @@ const NewCertificate: React.FC = () => {
               accept="application/pdf"
               onChange={handleFileChange}
               style={{ display: 'none' }} />
-          
             <div className="pdf-preview">
               {pdfPreview ? (
                 <embed src={pdfPreview as string} type="application/pdf" width="100%" height="100%" />
@@ -130,10 +133,10 @@ const NewCertificate: React.FC = () => {
               )}
             </div>
           </div>
-  
+
           <div className="buttons">
-            <button className="save-button" onClick={handleSave}>Save</button>
-            <button className="reset-button" onClick={handleReset}>Reset</button>
+              <button className="save-button" onClick={handleSave}>Save</button>
+              <button className="reset-button" onClick={handleReset}>Reset</button>
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
