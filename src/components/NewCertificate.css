@@ -50,7 +50,7 @@ select {
 
 .form-group .input-with-icons input {
   flex: 1;
-  padding-right: 60px; /* Adjust based on icon size */
+  padding-right: 60px;
 }
 
 .form-group .icon {
