@@ -1,0 +1,61 @@
+.new-certificate-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .new-certificate-container h2 {
+    margin-bottom: 20px;
+    color: #2196f3;
+  }
+  
+  .new-certificate-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .new-certificate-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .new-certificate-container input,
+  .new-certificate-container select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .new-certificate-container button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #2196f3;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .new-certificate-container button.reset {
+    background-color: #f44336;
+  }
+  
+  .new-certificate-container button:hover {
+    background-color: #1976d2;
+  }
+  
+  .new-certificate-container button.reset:hover {
+    background-color: #d32f2f;
+  }
+  
+  .new-certificate-container .file-preview {
+    margin-top: 10px;
+    color: #666;
+  }
+  

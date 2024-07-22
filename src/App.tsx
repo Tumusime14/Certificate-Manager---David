@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import Table from "./components/Table"; 
+import Table from "./components/Table";
+import NewCertificate from "./components/NewCertificate.tsx";
 import "./App.css";
 
 const App: FC = () => {
@@ -8,6 +10,7 @@ const App: FC = () => {
   const [showTable, setShowTable] = useState<boolean>(false);
 
   return (
+    <Router>
     <div className="App">
       <div className="grd">
         <div className="header">DCCS Tuzla</div>
@@ -17,10 +20,14 @@ const App: FC = () => {
         <Sidebar setTitle={setTitle} setShowTable={setShowTable} />
         <div className="content">
           <h1>{title}</h1>
-          {showTable && <Table />}
+          <Routes>
+            <Route path="/" element={<Table/>} />
+            <Route path="/new-certificate" element={<NewCertificate/>}/>
+          </Routes>
         </div>
       </div>
     </div>
+  </Router>  
   );
 };
 

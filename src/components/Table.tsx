@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
-const Table = () => {
+const Table: React.FC = () => {
+  const navigate = useNavigate();
   const data = [
     {
       supplier: 'DAIMLER AG, 1, Berlin',
@@ -24,6 +26,7 @@ const Table = () => {
 
   return (
     <div>
+      <button onClick={()=> navigate('/new-certificate')}>New Certificate</button>
       <table>
         <thead>
           <tr>
