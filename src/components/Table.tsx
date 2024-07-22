@@ -3,47 +3,27 @@ import "../styles/Table.css";
 
 
 interface TableProps {
-  onNewCertificate: () => void;
+  onNewCertificate?: () => void;
+  data?: any[];
 }
 
 const Table: React.FC<TableProps> = ({ onNewCertificate }) => {
-  const data = [
-    {
-      supplier: 'DAIMLER AG, 1, Berlin',
-      certificateType: 'Permission of Printing',
-      validFrom: '21.08.2017',
-      validTo: '26.08.2017'
-    },
-    {
-      supplier: 'ANDEMIS GmbH, 1, Stuttgart',
-      certificateType: 'OHSAS 18001',
-      validFrom: '18.08.2017',
-      validTo: '24.08.2017'
-    },
-    {
-      supplier: 'ANDEMIS GmbH, 1, Stuttgart',
-      certificateType: 'Permission of Printing',
-      validFrom: '04.10.2017',
-      validTo: '10.10.2017'
-    }
-  ];
-
   return (
     <div>
       <button className="new-certificate-button" onClick={onNewCertificate}>
         New Certificate
       </button>
-      <table>
+      {/* <table>
         <thead>
           <tr>
-            <td>Supplier</td>
+            <td>SupplierLKJHGF</td>
             <td>Certificate type</td>
             <td>Valid from</td>
             <td>Valid to</td>
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
+          {data?.map((row, index) => (
             <tr key={index}>
               <td>{row.supplier}</td>
               <td>{row.certificateType}</td>
@@ -52,7 +32,7 @@ const Table: React.FC<TableProps> = ({ onNewCertificate }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };

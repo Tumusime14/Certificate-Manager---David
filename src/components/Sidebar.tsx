@@ -8,7 +8,7 @@ import Down from "../icons/down";
 const menuItems = [
   { title: "Example 1", path: "/example1" },
   { title: "Example 2", path: "/example2" },
-  { title: "Example 3", path: "/example3" }
+  { title: "Example 3", path: "/example3" },
 ];
 
 const Sidebar: React.FC = () => {

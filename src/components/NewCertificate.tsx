@@ -1,48 +1,46 @@
 import React, { useState } from 'react';
-import './NewCertificate.css';
-import Search from "./icons/search";
-import X from "./icons/x";
-
+import { addCertificate } from "../DB/indexedDB"
+import "./NewCertificate.css";
+import { useNavigate } from 'react-router';
 const NewCertificate: React.FC = () => {
-  const [pdfPreview, setPdfPreview] = useState<string | ArrayBuffer | null>(null);
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     supplier: '',
     certificateType: '',
     validFrom: '',
     validTo: '',
-    pdfFile: null as File | null,
+    pdfFile: null as Blob | null,
   });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.type !== 'application/pdf') {
-        setErrorMessage('Please select a valid PDF file.');
-        return;
-      }
-      setErrorMessage(null);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPdfPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-      setFormData(prev => ({ ...prev, pdfFile: file }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        pdfFile: e.target.files[0],
+      });
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSave = () => {
-    if (!formData.supplier || !formData.certificateType || !formData.validFrom || !formData.validTo || !formData.pdfFile) {
-      setErrorMessage('Please fill out all required fields and upload a PDF.');
-      return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.pdfFile) {
+      await addCertificate({
+        supplier: formData.supplier,
+        certificateType: formData.certificateType,
+        validFrom: formData.validFrom,
+        validTo: formData.validTo,
+        pdfFile: formData.pdfFile,
+      });
+      navigate('/certificate-list')
+      handleReset();
     }
-    setErrorMessage(null);
-    console.log('Data saved:', formData);
   };
 
   const handleReset = () => {
@@ -53,92 +51,35 @@ const NewCertificate: React.FC = () => {
       validTo: '',
       pdfFile: null,
     });
-    setPdfPreview(null);
-    setErrorMessage(null);
   };
 
   return (
-    <div className="new-certificate">
-      <div className="form-container">
-        <div className="left-side">
-          <div className="form-group">
-            <label htmlFor="supplier">Supplier</label>
-            <div className="input-with-icons">
-              <input
-                type="text"
-                id="supplier"
-                name="supplier"
-                value={formData.supplier}
-                onChange={handleInputChange}
-              />
-              <div className="icon">
-                <Search />
-                <X />
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="certificateType">Certificate Type</label>
-            <select
-              id="certificateType"
-              name="certificateType"
-              value={formData.certificateType}
-              onChange={handleInputChange}
-            >
-              <option value="">Select your option</option>
-              <option value="Completion">Completion</option>
-              <option value="Participation">Participation</option>
-              <option value="Attendance">Attendance</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="validFrom">Valid From</label>
-            <input
-              type="date"
-              id="validFrom"
-              name="validFrom"
-              value={formData.validFrom}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="validTo">Valid To</label>
-            <input
-              type="date"
-              id="validTo"
-              name="validTo"
-              value={formData.validTo}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="right-side">
-          <div className="pdf-upload">
-            <label htmlFor="pdfFile" className="upload-button">Upload</label>
-            <input
-              type="file"
-              id="pdfFile"
-              accept="application/pdf"
-              onChange={handleFileChange}
-              style={{ display: 'none' }} />
-          
-            <div className="pdf-preview">
-              {pdfPreview ? (
-                <embed src={pdfPreview as string} type="application/pdf" width="100%" height="100%" />
-              ) : (
-                <div style={{ textAlign: 'center', lineHeight: '300px', color: '#ccc' }}></div>
-              )}
-            </div>
-          </div>
-  
-          <div className="buttons">
-            <button className="save-button" onClick={handleSave}>Save</button>
-            <button className="reset-button" onClick={handleReset}>Reset</button>
-          </div>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-        </div>
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label>Supplier</label>
+        <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} required />
       </div>
-    </div>
+      <div className="form-group">
+        <label>Certificate Type</label>
+        <input type="text" name="certificateType" value={formData.certificateType} onChange={handleChange} required />
+      </div>
+      <div className="form-group">
+        <label>Valid From</label>
+        <input type="date" name="validFrom" value={formData.validFrom} onChange={handleChange} required />
+      </div>
+      <div className="form-group">
+        <label>Valid To</label>
+        <input type="date" name="validTo" value={formData.validTo} onChange={handleChange} required />
+      </div>
+      <div className="form-group">
+        <label>PDF Document</label>
+        <input type="file" name="pdfFile" onChange={handleFileChange} required />
+      </div>
+      <div className="form-group">
+        <button type="submit">Save</button>
+        <button type="button" onClick={handleReset}>Reset</button>
+      </div>
+    </form>
   );
 };
 
