@@ -1,7 +1,12 @@
 import React from 'react';
 import "../styles/Table.css";
 
-const Table = () => {
+
+interface TableProps {
+  onNewCertificate: () => void;
+}
+
+const Table: React.FC<TableProps> = ({ onNewCertificate }) => {
   const data = [
     {
       supplier: 'DAIMLER AG, 1, Berlin',
@@ -25,6 +30,9 @@ const Table = () => {
 
   return (
     <div>
+      <button className="new-certificate-button" onClick={onNewCertificate}>
+        New Certificate
+      </button>
       <table>
         <thead>
           <tr>
