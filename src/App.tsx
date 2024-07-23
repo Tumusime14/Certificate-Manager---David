@@ -8,6 +8,7 @@ const App: FC = () => {
   const [title, setTitle] = useState<string>("Start");
   const [showTable, setShowTable] = useState<boolean>(false);
   const [showNewCertificate, setShowNewCertificate] = useState<boolean>(false);
+  const [editingCertificate, setEditingCertificate] = useState<any | null>(null);
   const [tableData, setTableData] = useState<any[]>([
     {
       supplier: 'DAIMLER AG, 1, Berlin',
@@ -30,15 +31,29 @@ const App: FC = () => {
   ]);
 
   const handleNewCertificate = () => {
+    setEditingCertificate(null);
     setShowTable(false);
     setShowNewCertificate(true);
     setTitle("");
   };
 
   const handleSaveData = (newData: any) => {
-    setTableData((prevData) => [...prevData, newData]); 
+    if (editingCertificate) {
+      const updatedData = tableData.map(item => 
+        item === editingCertificate ? newData : item
+      );
+      setTableData(updatedData);
+    } else {
+      setTableData((prevData) => [...prevData, newData]);
+    }
     setShowNewCertificate(false);
     setShowTable(true);
+  };
+
+  const handleEditCertificate = (certificate: any) => {
+    setEditingCertificate(certificate);
+    setShowTable(false);
+    setShowNewCertificate(true);
   };
 
   return (
@@ -51,8 +66,18 @@ const App: FC = () => {
         <Sidebar setTitle={setTitle} setShowTable={setShowTable} setShowNewCertificate={setShowNewCertificate} />
         <div className="content">
           <h1>{title}</h1>
-          {showTable && !showNewCertificate && <Table onNewCertificate={handleNewCertificate} data={tableData} />}
-          {showNewCertificate && <NewCertificate onSave={handleSaveData} />}
+          {showTable && !showNewCertificate && (
+            <Table 
+              onNewCertificate={handleNewCertificate} 
+              data={tableData} 
+              onEdit={handleEditCertificate}/>
+          )}
+          {showNewCertificate && (
+            <NewCertificate 
+              onSave={handleSaveData} 
+              existingData={editingCertificate}
+            />
+          )}
         </div>
       </div>
     </div>

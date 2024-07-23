@@ -1,13 +1,15 @@
 import React from 'react';
 import "./Table.css";
+import "./NewCertificate.css";
 import GearIcon from './icons/gear';
 
 interface TableProps {
   onNewCertificate: () => void;
   data: any[];
+  onEdit: (certificate: any) => void;
 }
 
-const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
+const Table: React.FC<TableProps> = ({ onNewCertificate, data, onEdit }) => {
   return (
     <div>
       <button className="new-certificate-button" onClick={onNewCertificate}>
@@ -26,7 +28,15 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
         <tbody>
           {data.map((row, index) => (
             <tr key={index}>
-              <td><GearIcon /></td>
+              <td>
+                <div className="dropdown">
+                  <GearIcon />
+                  <div className="dropdown-content">
+                    <span onClick={() => onEdit(row)}>Edit</span>
+                    <span>Delete</span>
+                  </div>
+                </div>
+              </td>
               <td>{row.supplier}</td>
               <td>{row.certificateType}</td>
               <td>{row.validFrom}</td>

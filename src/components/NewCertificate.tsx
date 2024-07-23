@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewCertificate.css';
 import Search from "./icons/search";
 import X from "./icons/x";
 
 interface NewCertificateProps {
   onSave: (data: any) => void;
+  existingData?: any;
 }
 
-const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
+const NewCertificate: React.FC<NewCertificateProps> = ({ onSave, existingData }) => {
   const [pdfPreview, setPdfPreview] = useState<string | ArrayBuffer | null>(null);
   const [formData, setFormData] = useState({
     supplier: '',
@@ -17,6 +18,12 @@ const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
     pdfFile: null as File | null,
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (existingData) {
+      setFormData(existingData);
+    }
+  }, [existingData]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -122,25 +129,22 @@ const NewCertificate: React.FC<NewCertificateProps> = ({ onSave }) => {
             <input
               type="file"
               id="pdfFile"
-              accept="application/pdf"
+              name="pdfFile"
+              accept=".pdf"
               onChange={handleFileChange}
-              style={{ display: 'none' }} />
-            <div className="pdf-preview">
-              {pdfPreview ? (
-                <embed src={pdfPreview as string} type="application/pdf" width="100%" height="100%" />
-              ) : (
-                <div style={{ textAlign: 'center', lineHeight: '300px', color: '#ccc' }}></div>
-              )}
-            </div>
+              style={{ display: 'none' }}
+            />
+            {pdfPreview && (
+              <iframe src={pdfPreview as string} title="PDF Preview" className="pdf-preview"></iframe>
+            )}
           </div>
-
-          <div className="buttons">
-              <button className="save-button" onClick={handleSave}>Save</button>
-              <button className="reset-button" onClick={handleReset}>Reset</button>
-          </div>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
       </div>
+      <div className="form-buttons">
+        <button onClick={handleSave}>Save</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 };
