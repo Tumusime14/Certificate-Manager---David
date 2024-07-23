@@ -5,45 +5,10 @@ import "./styles/App.css";
 import Example1 from "./components/Example1";
 import Example2 from "./components/Example2";
 import Example3 from "./components/Example3";
-import NewCertificate from "./components/NewCertificate"; 
+import AddCertificate from "./components/certificates/AddCertificate";
+import EditCertificate from "./components/certificates/EditCertificate";
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
-  const [title, setTitle] = useState<string>("Start");
-  const [showTable, setShowTable] = useState<boolean>(false);
-  const [showNewCertificate, setShowNewCertificate] = useState<boolean>(false);
-  const [tableData, setTableData] = useState<any[]>([
-    {
-      supplier: 'DAIMLER AG, 1, Berlin',
-      certificateType: 'Permission of Printing',
-      validFrom: '21.08.2017',
-      validTo: '26.08.2017'
-    },
-    {
-      supplier: 'ANDEMIS GmbH, 1, Stuttgart',
-      certificateType: 'OHSAS 18001',
-      validFrom: '18.08.2017',
-      validTo: '24.08.2017'
-    },
-    {
-      supplier: 'ANDEMIS GmbH, 1, Stuttgart',
-      certificateType: 'Permission of Printing',
-      validFrom: '04.10.2017',
-      validTo: '10.10.2017'
-    }
-  ]);
-
-  const handleNewCertificate = () => {
-    setShowTable(false);
-    setShowNewCertificate(true);
-    setTitle("");
-  };
-
-  const handleSaveData = (newData: any) => {
-    setTableData((prevData) => [...prevData, newData]); 
-    setShowNewCertificate(false);
-    setShowTable(true);
-  };
-
   return (
     <Router>
       <div className="App">
@@ -61,7 +26,8 @@ const App: FC = () => {
               <Route path="/example1" element={<Example1 />} />
               <Route path="/example2" element={<Example2 />} />
               <Route path="/example3" element={<Example3 />} />
-              <Route path="/new-certificate" element={<NewCertificate />} />
+              <Route path="/new-certificate" element={<AddCertificate />} />
+              <Route path="/edit-certificate/:id" element={<EditCertificate />} /> 
             </Routes>
           </main>
         </div>

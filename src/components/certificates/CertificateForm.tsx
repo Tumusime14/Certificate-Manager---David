@@ -1,11 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { addCertificate } from "../DB/indexedDB";
+import React, { useState, useRef, useEffect } from 'react';
+import {  addCertificate, updateCertificate } from "../../DB/indexedDB";
 import { useNavigate } from 'react-router';
-import "../styles/NewCertificate.css";
-import Search from '../icons/search';
-import X from '../icons/x';
+import "../../styles/NewCertificate.css";
+import Search from '../../icons/search';
+import X from '../../icons/x';
+import { getCertificates } from "../../DB/indexedDB";
 
-const NewCertificate: React.FC = () => {
+interface ICertificateForm {
+  isEdit?: boolean
+  certificateId?: number
+}
+
+const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICertificateForm) => {
   const navigate = useNavigate();
   const validFromRef = useRef<HTMLInputElement>(null);
   const validToRef = useRef<HTMLInputElement>(null);
@@ -14,10 +20,35 @@ const NewCertificate: React.FC = () => {
     certificateType: '',
     validFrom: '',
     validTo: '',
-    pdfFile: null as Blob | null,
+    pdfFile: null as string | null,
     pdfPreview: '' as string | null,
   });
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(()=> {
+    if(isEdit && certificateId){
+      async function fetchData() {
+        const certificates = await getCertificates();
+
+const filteredCertificate = certificates.filter((certificate) => certificate.id ===certificateId)
+
+filteredCertificate.map((certificate)=> (
+
+
+  setFormData({
+    validFrom: certificate.validFrom ? certificate.validFrom : null,
+    validTo: certificate.validTo ? certificate.validTo : null,
+    certificateType: certificate.certificateType,
+    supplier: certificate.supplier,
+    pdfFile: certificate.pdfFile || null,
+    pdfPreview: certificate.pdfPreview || null
+  })
+))}
+  
+      fetchData();
+    }
+
+  }, [certificateId])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -32,29 +63,63 @@ const NewCertificate: React.FC = () => {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const fileExtension = file.name.split('.').pop()?.toLowerCase();
-      
-      if (fileExtension !== 'pdf') {
-        setError('Please upload a valid PDF document.');
-        return;
-      }
-
-      setFormData({
+    const file = e.target.files?.[0] || null;
+    if (file && file.type === 'application/pdf') {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+                setFormData({
         ...formData,
-        pdfFile: file,
-        pdfPreview: URL.createObjectURL(file),
+        pdfPreview: reader.result as string,
       });
-      setError(null);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please upload a valid file.');
     }
   };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0] || null;
+  //   if (file && file.type === 'application/pdf') {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       if (reader.result) {
+  //         setFormData({
+  //           ...formData,
+  //           pdfFile: file,
+  //           pdfPreview: URL.createObjectURL(file),
+  //         });
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   } else {
+  //     alert('Please upload a valid file.');
+  //   }
+  // };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+  //     const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      
+  //     if (fileExtension !== 'pdf') {
+  //       setError('Please upload a valid PDF document.');
+  //       return;
+  //     }
+
+  //     setFormData({
+  //       ...formData,
+  //       pdfFile: file,
+  //       pdfPreview: URL.createObjectURL(file),
+  //     });
+  //     setError(null);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.pdfFile) {
+    if (!formData.pdfPreview) {
       setError('Please upload a PDF document before submitting.'); 
       return;
     }
@@ -62,13 +127,26 @@ const NewCertificate: React.FC = () => {
     setError(null);
 
     try {
-      await addCertificate({
-        supplier: formData.supplier,
-        certificateType: formData.certificateType,
-        validFrom: formData.validFrom,
-        validTo: formData.validTo,
-        pdfFile: formData.pdfFile,
-      });
+      if(certificateId && isEdit){
+        console.log("edit clicked");
+        await updateCertificate({
+          supplier: formData.supplier,
+          certificateType: formData.certificateType,
+          validFrom: formData.validFrom,
+          validTo: formData.validTo,
+          pdfFile: formData.pdfFile,
+        }, certificateId as number)
+      }
+      else{
+        await addCertificate({
+          supplier: formData.supplier,
+          certificateType: formData.certificateType,
+          validFrom: formData.validFrom,
+          validTo: formData.validTo,
+          pdfFile: formData.pdfFile,
+        });
+      }
+      
       navigate('/example1');
       handleReset();
     } catch (error) {
@@ -172,4 +250,4 @@ const NewCertificate: React.FC = () => {
   );
 };
 
-export default NewCertificate;
+export default CertificateForm;
