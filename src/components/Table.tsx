@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Table.css";
+import GearIcon from './icons/gear';
 
 interface TableProps {
   onNewCertificate: () => void;
@@ -15,6 +16,7 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
       <table>
         <thead>
           <tr>
+            <td></td>
             <td>Supplier</td>
             <td>Certificate type</td>
             <td>Valid from</td>
@@ -24,6 +26,7 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data }) => {
         <tbody>
           {data.map((row, index) => (
             <tr key={index}>
+              <td><GearIcon /></td>
               <td>{row.supplier}</td>
               <td>{row.certificateType}</td>
               <td>{row.validFrom}</td>
