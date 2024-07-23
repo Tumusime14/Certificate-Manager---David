@@ -10,6 +10,7 @@ const Example1: React.FC = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState<any[]>([]);
 
+
   useEffect(() => {
     async function fetchData() {
       const data = await getCertificates();
