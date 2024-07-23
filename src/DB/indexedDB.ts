@@ -23,23 +23,6 @@ export const initializeDB = () => {
   });
 };
 
-export const addCertificate = async (certificate: { supplier: string; certificateType: string; validFrom: string; validTo: string; pdfFile: Blob; }) => {
-  const db = await initializeDB();
-  return new Promise<void>((resolve, reject) => {
-    const transaction = db.transaction('certificates', 'readwrite');
-    const store = transaction.objectStore('certificates');
-    const request = store.add(certificate);
-
-    request.onsuccess = () => {
-      resolve();
-    };
-
-    request.onerror = (event) => {
-      reject((event.target as IDBRequest).error);
-    };
-  });
-};
-
 export const getCertificates = async () => {
   const db = await initializeDB();
   return new Promise<any[]>((resolve, reject) => {
@@ -74,12 +57,29 @@ export const deleteCertificate = async (id: IDBValidKey | IDBKeyRange) => {
   });
 };
 
-export const updateCertificate = async (certificate: any) => {
+export const addCertificate = async (certificate: { supplier: string; certificateType: string; validFrom: string; validTo: string; pdfFile: string|null; }) => {
   const db = await initializeDB();
   return new Promise<void>((resolve, reject) => {
     const transaction = db.transaction('certificates', 'readwrite');
     const store = transaction.objectStore('certificates');
-    const request = store.put(certificate);
+    const request = store.add(certificate);
+
+    request.onsuccess = () => {
+      resolve();
+    };
+
+    request.onerror = (event) => {
+      reject((event.target as IDBRequest).error);
+    };
+  });
+};
+
+export const updateCertificate = async (certificate: any, id:number) => {
+  const db = await initializeDB();
+  return new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction('certificates', 'readwrite');
+    const store = transaction.objectStore('certificates');
+    const request = store.put({...certificate, id});
 
     request.onsuccess = () => {
       resolve();
