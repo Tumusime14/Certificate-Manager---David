@@ -15,17 +15,17 @@
   cursor: pointer;
 }
 
-.downicon.rotated{
-translate: 1s ease;
-transform: rotate(180deg);
-}
-
 .menu-item:hover {
   background-color: #e0e0e0;
 }
 
-.icon {
-  margin-right: 10px;
+.downicon {
+  transition: transform 0.00001s ease;
+}
+
+.rotated {
+  position:sticky;
+  transform: rotate(180deg);
 }
 
 .dropdown {
@@ -41,5 +41,3 @@ transform: rotate(180deg);
 .dropdown-item:hover {
   background-color: #e0e0e0;
 }
-
-
