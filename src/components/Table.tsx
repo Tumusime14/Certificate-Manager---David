@@ -7,9 +7,10 @@ interface TableProps {
   onNewCertificate: () => void;
   data: any[];
   onEdit: (certificate: any) => void;
+  onDelete: (index: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ onNewCertificate, data, onEdit }) => {
+const Table: React.FC<TableProps> = ({ onNewCertificate, data, onEdit, onDelete }) => {
   return (
     <div>
       <button className="new-certificate-button" onClick={onNewCertificate}>
@@ -33,7 +34,7 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data, onEdit }) => {
                   <GearIcon />
                   <div className="dropdown-content">
                     <span onClick={() => onEdit(row)}>Edit</span>
-                    <span>Delete</span>
+                    <span onClick={() => onDelete(index)}>Delete</span>
                   </div>
                 </div>
               </td>
@@ -50,3 +51,4 @@ const Table: React.FC<TableProps> = ({ onNewCertificate, data, onEdit }) => {
 };
 
 export default Table;
+

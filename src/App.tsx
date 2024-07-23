@@ -56,6 +56,12 @@ const App: FC = () => {
     setShowNewCertificate(true);
   };
 
+  const handleDeleteCertificate = (index: number) => {
+    const updatedData = [...tableData];
+    updatedData.splice(index, 1);
+    setTableData(updatedData);
+  };
+
   return (
     <div className="App">
       <div className="grd">
@@ -70,7 +76,9 @@ const App: FC = () => {
             <Table 
               onNewCertificate={handleNewCertificate} 
               data={tableData} 
-              onEdit={handleEditCertificate}/>
+              onEdit={handleEditCertificate}
+              onDelete={handleDeleteCertificate}
+            />
           )}
           {showNewCertificate && (
             <NewCertificate 
