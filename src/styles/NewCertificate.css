@@ -1,123 +1,136 @@
-.new-certificate {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-.form-container {
-  display: flex;
+.new-certificate-form {
   width: 100%;
-  max-width: 1200px;
-  gap: 20px;
-  background-color: #f8f8f8;
-  padding: 20px;
-  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  background-color: #8e92961b;
 }
 
-.left-side, .right-side {
+.form-left {
   flex: 1;
+  width: 50%;
+  height: 75vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 15px;
 }
 
-.left-side {
+.form-right {
+  flex: 1;
+  height: 75vh;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  font-style: italic;
+  padding: 5px 15px;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form-group {
-  margin-bottom: 15px;
-  position: relative;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="date"],
-select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.form-group .input-with-icons {
-  display: flex;
-  align-items: center;
-}
-
-.form-group .input-with-icons input {
-  flex: 1;
-  padding-right: 60px;
-}
-
-.form-group .icon {
-  position: absolute;
-  right: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.form-group .icon svg {
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-.right-side {
-  display: flex;
-  flex-direction: column;
-}
-
-.pdf-upload {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  margin-left: 20px;
+  color: #423e3e;
+  font-size: small;
+  font-style: italic;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+  margin-left: 20px;
+  width: 360px;
+  border: 0.5px solid gray;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+.input-container{
+  display: flex;
+  position: relative;
+}
+.icon{
+  position: absolute;
+  right: 0;
+  border: 1px solid rgb(49, 49, 49);
+  margin-left: 5px;
+  color: #423e3e;
+  background-color: #8e92961b;
+  padding: 6px 6px;
+  margin-bottom: 10px;
+
+}
+
+.input-container > :nth-child(2){
+  right: 2rem;
+}
+
+select{
+  margin-left: 20px;
+  width: 375px;
+  border: 0.5px solid gray;
+  padding: 8px;
+  margin-bottom: 10px;
 }
 
 .upload-button {
   background-color: #007bff;
   color: white;
-  padding: 10px 20px;
   border: none;
+  height: 40px;
+  width: 120px;
+  padding: 8px 12px;
   cursor: pointer;
-  margin-bottom: 10px;
-  text-align: center;
+  align-self: flex-start;
+}
+
+.pdf-preview-container {
+  width: 100%;
+  height: 68vh;
+  border: 1px solid #423e3e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pdf-preview {
   width: 100%;
-  border: 1px solid #738273;
-  height: 300px;
+  height: 100%;
 }
 
-.buttons {
-  display: flex;
-  justify-content: flex-end;
+.pdf-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.form-actions {
+  display: flex;  
+  align-self: flex-end;
+  margin-top: 10px;
   gap: 10px;
-  margin-top: auto;
 }
 
-.save-button,
-.reset-button {
-  padding: 10px 20px;
-  border: none;
+.form-actions > button {
+  margin-top: 20px;
+  height: 30px;
+  width: 110px;
+  padding: 8px 12px;
   cursor: pointer;
 }
 
-.save-button {
-  background-color: #99c010;
-  color: white;
-}
 
-.reset-button {
-  background-color: #ffffff;
-  border: 1px solid rgb(49, 44, 44);
-  color: #000000;
+.form-actions > button[type="submit"]{
+ background-color: #9bd80c;
+ color: white;
+ margin-right: 10px;
+ border: none;
 }
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
+.form-actions > button[type="button"]{
+  background-color: white;
+  color: black;
+  border: 1px solid #423e3e;
+ }

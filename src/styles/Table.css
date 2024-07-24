@@ -1,5 +1,18 @@
+.new-certificate-button{
+  height: 40px;
+  width: 130px;
+  padding: 4px 8px;
+  background-color: #9bd80c;
+  color: white;
+  border: none;
+  margin-bottom: 8px;
+}
+.new-certificate-button:hover{
+  cursor: pointer;
+}
+
 table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
   }
   

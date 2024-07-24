@@ -5,8 +5,7 @@ import "./styles/App.css";
 import Example1 from "./components/Example1";
 import Example2 from "./components/Example2";
 import Example3 from "./components/Example3";
-import NewCertificate from "./components/NewCertificate";
-// import CertificateList from "./components/CertificateList"; 
+import NewCertificate from "./components/NewCertificate"; 
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
   return (
@@ -16,7 +15,6 @@ const App: FC = () => {
           <div className="header">DCCS Tuzla</div>
           <div className="sub-header"></div>
         </header>
-
         <div className="container">
           <nav>
             <Sidebar />
