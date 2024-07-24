@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Sidebar.css";
-import Home from "../components/icons/home";
-import Menu from "../components/icons/menu";
-import Down from "../components/icons/down";
+import "../styles/Sidebar.css";
+import Home from "../icons/home";
+import Menu from "../icons/menu";
+import Down from "../icons/down";
 
 const menuItems = [
   { title: "Example 1", path: "/example1" },
