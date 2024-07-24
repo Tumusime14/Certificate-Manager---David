@@ -2,11 +2,11 @@ import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import "./App.css";
+import Example1 from "./components/Example1";
+import Example2 from "./components/Example2";
+import Example3 from "./components/Example3";
 
 const Start = () => <h1>Start</h1>;
-const Example1 = () => <h1>Example 1</h1>;
-const Example2 = () => <h1>Example 2</h1>;
-const Example3 = () => <h1>Example 3</h1>;
 
 const App: FC = () => {
   return (
