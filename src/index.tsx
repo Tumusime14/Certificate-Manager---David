@@ -1,18 +1,19 @@
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
 
-const rootElement = document.getElementById('root');
-
-if (!rootElement) {
-  throw new Error('Failed to find the root element');
-}
-
-const root = createRoot(rootElement);
-
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
+<<<<<<< HEAD
   <StrictMode>
     <App />
   </StrictMode>
+=======
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+>>>>>>> 2dc3d3b (Feature/Task-1-KAN-8 Added menu items, dropdown effect)
 );
+
 

@@ -17,6 +17,10 @@ module.exports = {
         enforce: 'pre',
         use: ['source-map-loader'],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
@@ -37,5 +41,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
+    new CleanWebpackPlugin(), 
   ],
 };
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+>>>>>>> 2dc3d3b (Feature/Task-1-KAN-8 Added menu items, dropdown effect)
