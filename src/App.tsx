@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-// import Table from "./components/Table"; 
-import "./App.css";
+import "./styles/App.css";
 import Example1 from "./components/Example1";
 import Example2 from "./components/Example2";
 import Example3 from "./components/Example3";
