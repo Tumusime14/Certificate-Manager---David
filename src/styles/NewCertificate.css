@@ -1,0 +1,136 @@
+.new-certificate-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #8e92961b;
+}
+
+.form-left {
+  flex: 1;
+  width: 50%;
+  height: 75vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 15px;
+}
+
+.form-right {
+  flex: 1;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  margin-left: 20px;
+  color: #423e3e;
+  font-size: small;
+  font-style: italic;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+  margin-left: 20px;
+  width: 360px;
+  border: 0.5px solid gray;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+.input-container{
+  display: flex;
+  position: relative;
+}
+.icon{
+  position: absolute;
+  right: 0;
+  border: 1px solid rgb(49, 49, 49);
+  margin-left: 5px;
+  color: #423e3e;
+  background-color: #8e92961b;
+  padding: 6px 6px;
+  margin-bottom: 10px;
+
+}
+
+.input-container > :nth-child(2){
+  right: 2rem;
+}
+
+select{
+  margin-left: 20px;
+  width: 375px;
+  border: 0.5px solid gray;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.upload-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  height: 40px;
+  width: 120px;
+  padding: 8px 12px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.pdf-preview-container {
+  width: 100%;
+  height: 68vh;
+  border: 1px solid #423e3e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.pdf-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.form-actions {
+  display: flex;  
+  align-self: flex-end;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.form-actions > button {
+  margin-top: 20px;
+  height: 30px;
+  width: 110px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+
+.form-actions > button[type="submit"]{
+ background-color: #9bd80c;
+ color: white;
+ margin-right: 10px;
+ border: none;
+}
+.form-actions > button[type="button"]{
+  background-color: white;
+  color: black;
+  border: 1px solid #423e3e;
+ }
