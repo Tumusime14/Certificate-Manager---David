@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getCertificates } from "../DB/indexedDB";
+import { getCertificates, deleteCertificate } from '../DB/indexedDB';
 import Table from './Table';
 import GearIcon from '../icons/gear';
-
-import "../styles/Table.css";
+import '../styles/Table.css';
 import { useNavigate } from 'react-router';
 
 const Example1: React.FC = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState<any[]>([]);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -20,10 +18,23 @@ const Example1: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleEditNavigate =(id:string) => {
-    navigate(`/edit-certificate/${id}`)
-  }
-console.log(certificates)
+  const handleEditNavigate = (id: string) => {
+    navigate(`/edit-certificate/${id}`);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (window.confirm('Are you sure you want to delete this certificate?')) {
+      try {
+        await deleteCertificate(id);
+        setCertificates((prevCertificates) =>
+          prevCertificates.filter((certificate) => certificate.id !== id)
+        );
+      } catch (error) {
+        console.error('Failed to delete certificate', error);
+      }
+    }
+  };
+
   return (
     <div>
       <Table data={[]} onNewCertificate={() => navigate('/new-certificate')} />
@@ -40,9 +51,12 @@ console.log(certificates)
         <tbody>
           {certificates.map((certificate) => (
             <tr key={certificate.id}>
-              <td><GearIcon onEdit={()=>handleEditNavigate(certificate.id)} onDelete={function (): void {
-                throw new Error('Function not implemented.');
-              } }/></td>
+              <td>
+                <GearIcon
+                  onEdit={() => handleEditNavigate(certificate.id)}
+                  onDelete={() => handleDelete(certificate.id)}
+                />
+              </td>
               <td>{certificate.supplier}</td>
               <td>{certificate.certificateType}</td>
               <td>{certificate.validFrom}</td>
