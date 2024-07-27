@@ -7,6 +7,7 @@ import Example2 from "./components/Example2";
 import Example3 from "./components/Example3";
 import AddCertificate from "./components/certificates/AddCertificate";
 import EditCertificate from "./components/certificates/EditCertificate";
+
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
   return (
@@ -18,13 +19,13 @@ const App: FC = () => {
         </header>
         <div className="container">
           <nav>
-            <Sidebar />
+            <Sidebar/>
           </nav>
           <main className="content">
             <Routes>
               <Route path="/" element={<Start />} />
               <Route path="/example1" element={<Example1 />} />
-              <Route path="/example2" element={<Example2 />} />
+              <Route path="/example2" element={<Example2/>} />
               <Route path="/example3" element={<Example3 />} />
               <Route path="/new-certificate" element={<AddCertificate />} />
               <Route path="/edit-certificate/:id" element={<EditCertificate />} /> 
