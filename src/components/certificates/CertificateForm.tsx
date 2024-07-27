@@ -24,6 +24,10 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
     pdfPreview: '' as string | null,
   });
   const [error, setError] = useState<string | null>(null);
+  // const [isModalOpen, setisOpenModal] = useState(false);
+  // const openModal = () => {
+  //   setisOpenModal(true)
+  // }
 
   useEffect(()=> {
     if(isEdit && certificateId){
@@ -86,9 +90,6 @@ filteredCertificate.map((certificate)=> (
       setError('Please upload a PDF document before submitting.'); 
       return;
     }
-
-    setError(null);
-
     try {
       if(certificateId && isEdit){
         console.log("edit clicked");
@@ -143,7 +144,7 @@ filteredCertificate.map((certificate)=> (
               required 
               className="input-field" 
             />
-            <Search className="icon" />
+            <Search className="icon"/>
             <X className="icon" onClick={() => setFormData({ ...formData, supplier: '' })} />
           </div>
         </div>
