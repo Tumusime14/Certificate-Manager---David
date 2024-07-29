@@ -7,6 +7,7 @@ import Example2 from "./components/Example2";
 import Example3 from "./components/Example3";
 import AddCertificate from "./components/certificates/AddCertificate";
 import EditCertificate from "./components/certificates/EditCertificate";
+import Header from "./components/Header";
 
 const Start = () => <h1>Start</h1>;
 const App: FC = () => {
@@ -15,7 +16,7 @@ const App: FC = () => {
       <div className="App">
         <header className="main-header"> 
           <div className="header">DCCS Tuzla</div>
-          <div className="sub-header"></div>
+          <div className="sub-header">< Header/></div>
         </header>
         <div className="container">
           <nav>

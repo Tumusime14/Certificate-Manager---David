@@ -5,7 +5,6 @@ import GearIcon from '../icons/gear';
 import Table from './Table';
 import '../styles/Table.css';
 import { useNavigate } from 'react-router';
-
 const Example1: React.FC = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState<any[]>([]);
@@ -24,7 +23,7 @@ const Example1: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this certificate?')) {
+    if (window.confirm("Are you sure")) {
       try {
         await deleteCertificate(id);
         setCertificates((prevCertificates) =>
