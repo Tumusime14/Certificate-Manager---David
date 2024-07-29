@@ -1,0 +1,16 @@
+{
+  "headerTitle": "DCCS Tuzla",
+  "start": "Start",
+  "example1": "Example 1",
+  "example2": "Example 2",
+  "example3": "Example 3",
+  "newCertificate": "New Certificate",
+  "editCertificate": "Edit Certificate",
+  "supplier": "Supplier",
+  "certificateType": "Certificate Type",
+  "validFrom": "Valid From",
+  "validTo": "Valid To",
+  "save": "Save",
+  "reset": "Reset",
+  "upload": "Upload"
+}
