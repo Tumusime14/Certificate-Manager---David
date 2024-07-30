@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import '../styles/SupplierLookupModal.css';
-import SupplierTable from './Table';
+import useTranslation from './context/useTranslation';
 
 interface Props {
   onClose: () => void;
@@ -11,7 +11,7 @@ const SupplierLookupModal: FC<Props> = ({ onClose, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [indexSearchTerm, setIndexSearchTerm] = useState('');
   const [citySearchTerm, setCitySearchTerm] = useState('');
-  const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
+  const translate = useTranslation();
 
   const suppliers = [
     { name: 'ANDEMIS GmbH', index: '1', city: 'Stuttgart' },
@@ -19,15 +19,15 @@ const SupplierLookupModal: FC<Props> = ({ onClose, onSelect }) => {
     { name: 'Munich', index: '3', city: 'Munich' },
   ];
 
-  const handleSearchChange = (e: any) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleIndexSearchChange = (e: any) => {
+  const handleIndexSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIndexSearchTerm(e.target.value);
   };
 
-  const handleCitySearchChange = (e: any) => {
+  const handleCitySearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCitySearchTerm(e.target.value);
   };
 
@@ -39,74 +39,80 @@ const SupplierLookupModal: FC<Props> = ({ onClose, onSelect }) => {
     );
   });
 
-  const handleSelect = () => {
-    if (selectedSupplier) {
-      onSelect(selectedSupplier);
-      onClose();
-    } else {
-      alert('Please select a supplier.');
-    }
-  };
-
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="topbar">
-          <h3>Search for suppliers</h3>
+          <h3>{translate('search_for_suppliers')}</h3>
           <span className="close-button" onClick={onClose}>&times;</span>
         </div>
         <div className="search-criteria">
-          <h4>Search criteria</h4>
+          <h4>{translate('search_criteria')}</h4>
           <div className="form-row">
             <div className="input-group">
-              <label htmlFor="searchTerm">Supplier name</label>
+              <label htmlFor="searchTerm">{translate('supplier_name')}</label>
               <input
                 type="text"
                 id="searchTerm"
                 value={searchTerm}
                 onChange={handleSearchChange}
                 className="search-input"
-                placeholder="Enter supplier name"
+                placeholder={translate('supplier_name')}
               />
             </div>
             <div className="input-group">
-              <label htmlFor="searchIndex">Index</label>
+              <label htmlFor="searchIndex">{translate('index')}</label>
               <input
                 type="text"
                 id="searchIndex"
                 value={indexSearchTerm}
                 onChange={handleIndexSearchChange}
                 className="search-input"
-                placeholder="Enter index"
+                placeholder={translate('index')}
               />
             </div>
             <div className="input-group">
-              <label htmlFor="searchCity">City</label>
+              <label htmlFor="searchCity">{translate('city')}</label>
               <input
                 type="text"
                 id="searchCity"
                 value={citySearchTerm}
                 onChange={handleCitySearchChange}
                 className="search-input"
-                placeholder="Enter city"
+                placeholder={translate('city')}
               />
             </div>
           </div>
           <div className="button-row">
-            <button className="search-btn">Search</button>
-            <button className="reset-btn" onClick={() => { setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm(''); }}>Reset</button>
+            <button className="search-btn">{translate('search')}</button>
+            <button className="reset-btn" onClick={() => { setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm(''); }}>{translate('reset')}</button>
           </div>
         </div>
         <div className="supplier-list">
-          <h4>Supplier list</h4>
-          <SupplierTable
-            headers={['Supplier name', 'Supplier index', 'City']}
-            data={filteredSuppliers}
-            onRowClick={(row) => setSelectedSupplier(row.name)}
-          />
+          <h4>{translate('supplier_list')}</h4>
+          <table className="supplier-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{translate('supplier_name')}</th>
+                <th>{translate('index')}</th>
+                <th>{translate('city')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredSuppliers.map((supplier, index) => (
+                <tr key={index} onClick={() => onSelect(supplier.name)}>
+                  <td><input type="radio" name="supplier" /></td>
+                  <td>{supplier.name}</td>
+                  <td>{supplier.index}</td>
+                  <td>{supplier.city}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           <div className="button-row">
-            <button className="select-btn" onClick={handleSelect}>Select</button>
-            <button className="cancel-btn" onClick={onClose}>Cancel</button>
+            <button className="select-btn" onClick={onClose}>{translate('select')}</button>
+            <button className="cancel-btn" onClick={onClose}>{translate('cancel')}</button>
           </div>
         </div>
       </div>
