@@ -1,0 +1,137 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.701);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 70%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.topbar {
+  background-color: #f4f4f4;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar h3 {
+  margin: 0;
+}
+
+.close-button {
+  cursor: pointer;
+  width: 40px;
+  background-color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.search-criteria {
+  padding: 10px;
+  margin: 20px 0;
+}
+
+.search-criteria h4 {
+  background-color: skyblue;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+}
+
+.search-input {
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.search-btn {
+  background-color: #051f3b;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.reset-btn {
+  background-color: #f4f4f4;
+  color: black;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.supplier-list {
+  margin-top: 20px;
+}
+
+.supplier-list h4 {
+  background-color: #25a4fff6;
+  padding: 10px;
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid #ddd;
+  color: #ddd;
+}
+
+.supplier-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.supplier-table th, .supplier-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.supplier-table th {
+  background-color: #f4f4f4;
+}
+
+.select-btn {
+  background-color: #ffaf03;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f4f4f4;
+  color: black;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
