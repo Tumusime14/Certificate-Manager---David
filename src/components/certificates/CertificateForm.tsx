@@ -21,6 +21,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
     certificateType: '',
     validFrom: '',
     validTo: '',
+    id: Date.now(),
     pdfFile: null as string | null,
     pdfPreview: '' as string | null,
   });
@@ -39,7 +40,8 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
             certificateType: certificate.certificateType,
             supplier: certificate.supplier,
             pdfFile: certificate.pdfFile || null,
-            pdfPreview: certificate.pdfPreview || null
+            pdfPreview: certificate.pdfPreview || null,
+            id: certificateId || Date.now(),
           })
         ));
       }
@@ -102,6 +104,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
           validFrom: formData.validFrom,
           validTo: formData.validTo,
           pdfFile: formData.pdfFile,
+          id: formData.id,
         });
       }
       navigate('/example1');
@@ -113,6 +116,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
 
   const handleReset = () => {
     setFormData({
+      id: Date.now(),
       supplier: '',
       certificateType: '',
       validFrom: '',
@@ -120,7 +124,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
       pdfFile: null,
       pdfPreview: null,
     });
-    setError(null); 
+    setError(null);
   };
 
   const handleSelectSupplier = (supplier: string) => {
@@ -142,7 +146,6 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
                 type="text" readOnly
                 name="supplier" 
                 value={formData.supplier} 
-                // onChange={handleChange} 
                 required 
                 className="input-field" 
               />

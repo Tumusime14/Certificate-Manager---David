@@ -1,14 +1,17 @@
 import React, { FC, useState } from 'react';
 import '../styles/SupplierLookupModal.css';
+import SupplierTable from './Table';
 
-interface Props{
-  onClose:()=>void;
-  onSelect:(name:string)=>void;
+interface Props {
+  onClose: () => void;
+  onSelect: (name: string) => void;
 }
-const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
+
+const SupplierLookupModal: FC<Props> = ({ onClose, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [indexSearchTerm, setIndexSearchTerm] = useState('');
   const [citySearchTerm, setCitySearchTerm] = useState('');
+  const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
 
   const suppliers = [
     { name: 'ANDEMIS GmbH', index: '1', city: 'Stuttgart' },
@@ -20,11 +23,11 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleIndexSearchChange = (e:any) => {
+  const handleIndexSearchChange = (e: any) => {
     setIndexSearchTerm(e.target.value);
   };
 
-  const handleCitySearchChange = (e:any) => {
+  const handleCitySearchChange = (e: any) => {
     setCitySearchTerm(e.target.value);
   };
 
@@ -35,6 +38,15 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
       supplier.city.toLowerCase().includes(citySearchTerm.toLowerCase())
     );
   });
+
+  const handleSelect = () => {
+    if (selectedSupplier) {
+      onSelect(selectedSupplier);
+      onClose();
+    } else {
+      alert('Please select a supplier.');
+    }
+  };
 
   return (
     <div className="modal-overlay">
@@ -82,33 +94,18 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
           </div>
           <div className="button-row">
             <button className="search-btn">Search</button>
-            <button className="reset-btn" onClick={() => {setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm('');}}>Reset</button>
+            <button className="reset-btn" onClick={() => { setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm(''); }}>Reset</button>
           </div>
         </div>
         <div className="supplier-list">
           <h4>Supplier list</h4>
-          <table className="supplier-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Supplier name</th>
-                <th>Supplier index</th>
-                <th>City</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredSuppliers.map((supplier, index) => (
-                <tr key={index} onClick={() => onSelect(supplier.name)}>
-                  <td><input type="radio" name="supplier" /></td>
-                  <td>{supplier.name}</td>
-                  <td>{supplier.index}</td>
-                  <td>{supplier.city}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <SupplierTable
+            headers={['Supplier name', 'Supplier index', 'City']}
+            data={filteredSuppliers}
+            onRowClick={(row) => setSelectedSupplier(row.name)}
+          />
           <div className="button-row">
-            <button className="select-btn" onClick={onClose}>Select</button>
+            <button className="select-btn" onClick={handleSelect}>Select</button>
             <button className="cancel-btn" onClick={onClose}>Cancel</button>
           </div>
         </div>

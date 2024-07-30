@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCertificates, deleteCertificate } from '../DB/indexedDB';
-import Table from './Table';
+import Button from './Button';
 import GearIcon from '../icons/gear';
+import Table from './Table';
 import '../styles/Table.css';
 import { useNavigate } from 'react-router';
 
@@ -33,38 +34,41 @@ const Example1: React.FC = () => {
         console.error('Failed to delete certificate', error);
       }
     }
+    navigate('/example1');
   };
+
+  const handleRowClick = (rowData: { [key: string]: any }) => {
+    handleEditNavigate(rowData.id);
+  };
+
+  const renderRowActions = (row: { [key: string]: any }) => {
+    return(
+    <GearIcon
+      onEdit={() => handleEditNavigate(row.id)}
+      onDelete={() => handleDelete(row.id)}
+    />
+  )};
+
+  const headers = ['Supplier', 'Certificate Type', 'Valid From', 'Valid To'];
+
+  const tableData = certificates.map((certificate) => ({
+    supplier: certificate.supplier,
+    certificateType: certificate.certificateType,
+    validFrom: certificate.validFrom,
+    validTo: certificate.validTo,
+    id: certificate.id,
+  }));
 
   return (
     <div>
-      <Table data={[]} onNewCertificate={() => navigate('/new-certificate')} />
-      <table>
-        <thead>
-          <tr>
-            <td></td>
-            <td>Supplier</td>
-            <td>Certificate Type</td>
-            <td>Valid From</td>
-            <td>Valid To</td>
-          </tr>
-        </thead>
-        <tbody>
-          {certificates.map((certificate) => (
-            <tr key={certificate.id}>
-              <td>
-                <GearIcon
-                  onEdit={() => handleEditNavigate(certificate.id)}
-                  onDelete={() => handleDelete(certificate.id)}
-                />
-              </td>
-              <td>{certificate.supplier}</td>
-              <td>{certificate.certificateType}</td>
-              <td>{certificate.validFrom}</td>
-              <td>{certificate.validTo}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Button data={[]} onNewCertificate={() => navigate('/new-certificate')} />
+      <Table
+        headers={headers}
+        data={tableData}
+        onRowClick={handleRowClick}
+        renderRowActions={renderRowActions}
+        selectableRows={false}
+      />
     </div>
   );
 };

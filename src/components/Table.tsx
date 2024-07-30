@@ -1,20 +1,66 @@
-import React from 'react';
-import "../styles/Table.css";
-
+import React, { FC, useState } from 'react';
+import '../styles/Table.css';
 
 interface TableProps {
-  onNewCertificate?: () => void;
-  data?: any[];
+  headers: string[];
+  data: { [key: string]: any }[];
+  onRowClick?: (rowData: { [key: string]: any }) => void;
+  renderRowActions?: (rowData: { [key: string]: any }) => React.ReactNode;
+  selectableRows?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ onNewCertificate }) => {
-  return (
-    <div>
-      <button className="new-certificate-button" onClick={onNewCertificate}>
-        New Certificate
-      </button>
+const Table: FC<TableProps> = ({
+  headers,
+  data,
+  onRowClick,
+  renderRowActions,
+  selectableRows = true,
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-    </div>
+  const handleRowClick = (index: number, row: { [key: string]: any }) => {
+    setSelectedIndex(index);
+    if (onRowClick) {
+      onRowClick(row);
+    }
+  };
+
+  return (
+    <table className="supplier-table">
+      <thead>
+        <tr>
+          <th></th>
+          {selectableRows && renderRowActions && <th></th>}
+          {headers.map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
+          {renderRowActions && <th className="hidden-column"></th>}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, index) => (
+          <tr
+            key={index}
+            onClick={() => handleRowClick(index, row)}
+          >
+            {renderRowActions && <td>{renderRowActions(row)}</td>}
+            {selectableRows && (
+              <td>
+                <input
+                  type="radio"
+                  name="supplier"
+                  checked={selectedIndex === index}
+                  onChange={() => handleRowClick(index, row)}
+                />
+              </td>
+            )}
+            {Object.values(row).map((value, i) => (
+              <td key={i}>{isNaN(value) ? value : null}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
