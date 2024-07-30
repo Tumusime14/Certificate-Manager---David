@@ -1,9 +1,12 @@
-import React from "react";
+import React, { FC } from 'react';
+import { useLanguage } from './context/LanguageContext';
 
-const Example3 = () =>{
-    return(
-        <h1>Example 3</h1>
-    )
-}
+const Example3: FC = () => {
+  const { translations } = useLanguage();
 
-export default Example3
+  return (
+    <h1>{translations['example3']}</h1>
+  );
+};
+
+export default Example3;

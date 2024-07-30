@@ -1,14 +1,17 @@
 import React, { FC, useState } from 'react';
 import '../styles/SupplierLookupModal.css';
+import useTranslation from './context/useTranslation';
 
-interface Props{
-  onClose:()=>void;
-  onSelect:(name:string)=>void;
+interface Props {
+  onClose: () => void;
+  onSelect: (name: string) => void;
 }
-const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
+
+const SupplierLookupModal: FC<Props> = ({ onClose, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [indexSearchTerm, setIndexSearchTerm] = useState('');
   const [citySearchTerm, setCitySearchTerm] = useState('');
+  const translate = useTranslation();
 
   const suppliers = [
     { name: 'ANDEMIS GmbH', index: '1', city: 'Stuttgart' },
@@ -16,15 +19,15 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
     { name: 'Munich', index: '3', city: 'Munich' },
   ];
 
-  const handleSearchChange = (e: any) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleIndexSearchChange = (e:any) => {
+  const handleIndexSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIndexSearchTerm(e.target.value);
   };
 
-  const handleCitySearchChange = (e:any) => {
+  const handleCitySearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCitySearchTerm(e.target.value);
   };
 
@@ -40,60 +43,60 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="topbar">
-          <h3>Search for suppliers</h3>
+          <h3>{translate('search_for_suppliers')}</h3>
           <span className="close-button" onClick={onClose}>&times;</span>
         </div>
         <div className="search-criteria">
-          <h4>Search criteria</h4>
+          <h4>{translate('search_criteria')}</h4>
           <div className="form-row">
             <div className="input-group">
-              <label htmlFor="searchTerm">Supplier name</label>
+              <label htmlFor="searchTerm">{translate('supplier_name')}</label>
               <input
                 type="text"
                 id="searchTerm"
                 value={searchTerm}
                 onChange={handleSearchChange}
                 className="search-input"
-                placeholder="Enter supplier name"
+                placeholder={translate('supplier_name')}
               />
             </div>
             <div className="input-group">
-              <label htmlFor="searchIndex">Index</label>
+              <label htmlFor="searchIndex">{translate('index')}</label>
               <input
                 type="text"
                 id="searchIndex"
                 value={indexSearchTerm}
                 onChange={handleIndexSearchChange}
                 className="search-input"
-                placeholder="Enter index"
+                placeholder={translate('index')}
               />
             </div>
             <div className="input-group">
-              <label htmlFor="searchCity">City</label>
+              <label htmlFor="searchCity">{translate('city')}</label>
               <input
                 type="text"
                 id="searchCity"
                 value={citySearchTerm}
                 onChange={handleCitySearchChange}
                 className="search-input"
-                placeholder="Enter city"
+                placeholder={translate('city')}
               />
             </div>
           </div>
           <div className="button-row">
-            <button className="search-btn">Search</button>
-            <button className="reset-btn" onClick={() => {setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm('');}}>Reset</button>
+            <button className="search-btn">{translate('search')}</button>
+            <button className="reset-btn" onClick={() => { setSearchTerm(''); setIndexSearchTerm(''); setCitySearchTerm(''); }}>{translate('reset')}</button>
           </div>
         </div>
         <div className="supplier-list">
-          <h4>Supplier list</h4>
+          <h4>{translate('supplier_list')}</h4>
           <table className="supplier-table">
             <thead>
               <tr>
                 <th></th>
-                <th>Supplier name</th>
-                <th>Supplier index</th>
-                <th>City</th>
+                <th>{translate('supplier_name')}</th>
+                <th>{translate('index')}</th>
+                <th>{translate('city')}</th>
               </tr>
             </thead>
             <tbody>
@@ -108,8 +111,8 @@ const SupplierLookupModal:FC<Props> = ({ onClose, onSelect }) => {
             </tbody>
           </table>
           <div className="button-row">
-            <button className="select-btn" onClick={onClose}>Select</button>
-            <button className="cancel-btn" onClick={onClose}>Cancel</button>
+            <button className="select-btn" onClick={onClose}>{translate('select')}</button>
+            <button className="cancel-btn" onClick={onClose}>{translate('cancel')}</button>
           </div>
         </div>
       </div>

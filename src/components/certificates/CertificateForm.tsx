@@ -6,13 +6,15 @@ import Search from '../../icons/search';
 import X from '../../icons/x';
 import { getCertificates } from "../../DB/indexedDB";
 import SupplierLookupModal from '../SupplierLookupModal';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ICertificateForm {
-  isEdit?: boolean
-  certificateId?: number
+  isEdit?: boolean;
+  certificateId?: number;
 }
 
-const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICertificateForm) => {
+const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: ICertificateForm) => {
+  const { translations } = useLanguage();
   const navigate = useNavigate();
   const validFromRef = useRef<HTMLInputElement>(null);
   const validToRef = useRef<HTMLInputElement>(null);
@@ -27,8 +29,8 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(()=> {
-    if(isEdit && certificateId){
+  useEffect(() => {
+    if (isEdit && certificateId) {
       async function fetchData() {
         const certificates = await getCertificates();
         const filteredCertificate = certificates.filter((certificate) => certificate.id === certificateId);
@@ -75,14 +77,14 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
       };
       reader.readAsDataURL(file);
     } else {
-      alert('Please upload a valid file.');
+      alert(translations['invalidFileError']);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.pdfPreview) {
-      setError('Please upload a PDF document before submitting.'); 
+      setError(translations['pdfRequiredError']);
       return;
     }
     try {
@@ -94,9 +96,8 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
           validFrom: formData.validFrom,
           validTo: formData.validTo,
           pdfFile: formData.pdfFile,
-        }, certificateId as number);
-      }
-      else{
+        }, certificateId);
+      } else {
         await addCertificate({
           supplier: formData.supplier,
           certificateType: formData.certificateType,
@@ -137,15 +138,14 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
       <form onSubmit={handleSubmit} className="new-certificate-form">
         <div className="form-left">
           <div className="form-group">
-            <label>Supplier</label>
+            <label>{translations['supplier']}</label>
             <div className="input-container">
-              <input 
+              <input
                 type="text" readOnly
-                name="supplier" 
-                value={formData.supplier} 
-                // onChange={handleChange} 
-                required 
-                className="input-field" 
+                name="supplier"
+                value={formData.supplier}
+                required
+                className="input-field"
               />
               <Search className="icon" onClick={() => setIsModalOpen(true)} />
               <X className="icon" onClick={() => setFormData({ ...formData, supplier: '' })} />
@@ -164,10 +164,10 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
           </div>
           
           <div className="form-group">
-            <label>Valid from</label>
+            <label>{translations['validFrom']}</label>
             <input
               type="text" required
-              placeholder="Click to select date"
+              placeholder='Click to select date'
               ref={validFromRef}
               name="validFrom"
               value={formData.validFrom}
@@ -175,9 +175,9 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
               onFocus={() => { validFromRef.current!.type = "date"; }}
             />
           </div>
-          
+
           <div className="form-group">
-            <label>Valid to</label>
+            <label>{translations['validTo']}</label>
             <input
               type="text"
               placeholder="Click to select date"
@@ -189,28 +189,28 @@ const CertificateForm: React.FC<ICertificateForm> = ({isEdit, certificateId}:ICe
               required
             />
           </div>
-          
-          {error && <p style={{ color: 'red' }}>{error}</p>} 
+
+          {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
-        
+
         <div className="form-right">
           <div className="form-group">
             <input type="file" name="pdfFile" accept="application/pdf" onChange={handleFileChange} required style={{ display: 'none' }} />
             <button type="button" className="upload-button" onClick={() => {
               const fileInput = document.querySelector('input[name="pdfFile"]') as HTMLInputElement;
               fileInput?.click();
-            }}>Upload</button>
+            }}>{translations['upload']}</button>
           </div>
           <div className="pdf-preview-container">
             {formData.pdfPreview ? (
-              <iframe src={formData.pdfPreview} title="PDF Preview" className="pdf-preview" />
+              <iframe src={formData.pdfPreview} title={translations['pdfPreview']} className="pdf-preview" />
             ) : (
-              <div className="pdf-placeholder"></div>
+              <div className="pdf-placeholder">{translations['noPreview']}</div>
             )}
           </div>
           <div className="form-actions">
-            <button type="submit">Save</button>
-            <button type="button" onClick={handleReset}>Reset</button>
+            <button type="submit">{translations['save']}</button>
+            <button type="button" onClick={handleReset}>{translations['reset']}</button>
           </div>
         </div>
       </form>

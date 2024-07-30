@@ -4,9 +4,12 @@ import Table from './Table';
 import GearIcon from '../icons/gear';
 import '../styles/Table.css';
 import { useNavigate } from 'react-router';
+import { useLanguage } from './context/LanguageContext';
+
 const Example1: React.FC = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState<any[]>([]);
+  const { translations } = useLanguage();
 
   useEffect(() => {
     async function fetchData() {
@@ -22,7 +25,7 @@ const Example1: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm('Are you sure you want to delete this certificate?')) {
       try {
         await deleteCertificate(id);
         setCertificates((prevCertificates) =>
@@ -41,10 +44,10 @@ const Example1: React.FC = () => {
         <thead>
           <tr>
             <td></td>
-            <td>Supplier </td>
-            <td>Name</td>
-            <td>City</td>
-            <td>Type</td>
+            <td>{translations['supplier']}</td>
+            <td>{translations['certificateType']}</td>
+            <td>{translations['validFrom']}</td>
+            <td>{translations['validTo']}</td>
           </tr>
         </thead>
         <tbody>
