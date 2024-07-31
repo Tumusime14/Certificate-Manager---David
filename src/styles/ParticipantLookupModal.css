@@ -12,24 +12,33 @@
   }
   
   .modal-content {
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 8px;
     padding: 20px;
-    width: 90%;
-    max-width: 500px;
+    width: 60%;
     position: relative;
   }
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust 200px to your desired minimum width */
+    gap: 10px;
+  }
   
+  .input-group {
+    box-sizing: border-box;
+  }
+  
+  .input-group input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .close {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 24px;
     cursor: pointer;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
   }
   
   .form-group label {

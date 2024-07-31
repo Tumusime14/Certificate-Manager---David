@@ -1,4 +1,3 @@
-// App.tsx
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -10,16 +9,14 @@ import AddCertificate from './components/certificates/AddCertificate';
 import EditCertificate from './components/certificates/EditCertificate';
 import Header from './components/Header';
 import UserSwitcher from './components/UserSwitcher';
-import { UserProvider } from './components/context/UserContext';
 
 const Start: FC = () => {
-  return <h1>Start Page</h1>;
+  return <h1>Start</h1>;
 };
 
 const App: FC = () => {
   return (
     <Router>
-      <UserProvider>
         <div className="App">
           <header className="main-header">
             <div className="header">DCCS Tuzla</div>
@@ -44,7 +41,6 @@ const App: FC = () => {
             </main>
           </div>
         </div>
-      </UserProvider>
     </Router>
   );
 };

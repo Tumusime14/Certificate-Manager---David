@@ -28,5 +28,6 @@
   "reset": "Reset",
   "supplier_list": "Supplier list",
   "select": "Select",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "newComment": "New comment"
 }

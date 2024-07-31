@@ -28,5 +28,6 @@
   "reset": "Zurücksetzen",
   "supplier_list": "Lieferantenliste",
   "select": "Auswählen",
-  "cancel": "Abbrechen"
+  "cancel": "Abbrechen",
+  "newComment":"Nieuwe reactie"
 }
