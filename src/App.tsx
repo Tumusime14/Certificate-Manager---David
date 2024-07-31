@@ -1,3 +1,4 @@
+// App.tsx
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -8,39 +9,42 @@ import Example3 from './components/Example3';
 import AddCertificate from './components/certificates/AddCertificate';
 import EditCertificate from './components/certificates/EditCertificate';
 import Header from './components/Header';
-import { useLanguage } from './components/context/LanguageContext';
+import UserSwitcher from './components/UserSwitcher';
+import { UserProvider } from './components/context/UserContext';
 
 const Start: FC = () => {
-  const { translations } = useLanguage();
-  return <h1>{translations['start']}</h1>;
+  return <h1>Start Page</h1>;
 };
 
 const App: FC = () => {
-  const { translations } = useLanguage();
-
   return (
     <Router>
-      <div className="App">
-        <header className="main-header">
-          <div className="header">{translations['header']}</div>
-          <div className="sub-header"><Header /></div>
-        </header>
-        <div className="container">
-          <nav>
-            <Sidebar />
-          </nav>
-          <main className="content">
-            <Routes>
-              <Route path="/" element={<Start />} />
-              <Route path="/example1" element={<Example1 />} />
-              <Route path="/example2" element={<Example2 />} />
-              <Route path="/example3" element={<Example3 />} />
-              <Route path="/new-certificate" element={<AddCertificate />} />
-              <Route path="/edit-certificate/:id" element={<EditCertificate />} />
-            </Routes>
-          </main>
+      <UserProvider>
+        <div className="App">
+          <header className="main-header">
+            <div className="header">DCCS Tuzla</div>
+            <div className="sub-header">
+              <UserSwitcher />
+              <Header />
+            </div>
+          </header>
+          <div className="container">
+            <nav>
+              <Sidebar />
+            </nav>
+            <main className="content">
+              <Routes>
+                <Route path="/" element={<Start />} />
+                <Route path="/example1" element={<Example1 />} />
+                <Route path="/example2" element={<Example2 />} />
+                <Route path="/example3" element={<Example3 />} />
+                <Route path="/new-certificate" element={<AddCertificate />} />
+                <Route path="/edit-certificate/:id" element={<EditCertificate />} />
+              </Routes>
+            </main>
+          </div>
         </div>
-      </div>
+      </UserProvider>
     </Router>
   );
 };
