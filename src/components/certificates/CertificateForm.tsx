@@ -6,6 +6,7 @@ import Search from '../../icons/search';
 import X from '../../icons/x';
 import { getCertificates } from "../../DB/indexedDB";
 import SupplierLookupModal from '../SupplierLookupModal';
+import ParticipantLookupModal from '../ParticipantLookupModal';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ICertificateForm {
@@ -27,7 +28,9 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
     pdfPreview: '' as string | null,
   });
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
+  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
+  const [participants, setParticipants] = useState<{ name: string; department: string; email: string }[]>([]);
 
   useEffect(() => {
     if (isEdit && certificateId) {
@@ -88,8 +91,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
       return;
     }
     try {
-      if(certificateId && isEdit){
-        console.log("edit clicked");
+      if (certificateId && isEdit) {
         await updateCertificate({
           supplier: formData.supplier,
           certificateType: formData.certificateType,
@@ -130,7 +132,19 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
       ...formData,
       supplier: supplier,
     });
-    setIsModalOpen(false);
+    setIsSupplierModalOpen(false);
+  };
+
+  const handleAddParticipant = (selectedParticipants: { name: string; department: string; email: string }[]) => {
+    const _participants = participants
+
+    selectedParticipants.forEach(participant => {
+      _participants.push(participant)
+    })
+
+    setParticipants(_participants);
+    
+    setIsParticipantModalOpen(false);
   };
 
   return (
@@ -147,7 +161,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
                 required
                 className="input-field"
               />
-              <Search className="icon" onClick={() => setIsModalOpen(true)} />
+              <Search className="icon" onClick={() => setIsSupplierModalOpen(true)} />
               <X className="icon" onClick={() => setFormData({ ...formData, supplier: '' })} />
             </div>
           </div>
@@ -191,18 +205,38 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
           </div>
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div className="participant-group">
-      <div className="partipant-container">
-    <label>Assigned users</label>
-    <button
-      type="button"
-      className="input-button">
-      <Search className="icon" />
-      Add participant
-    </button>
-  </div>
-      </div>
-  </div>
+          
+          <div className="participant-group">
+            <div className="participant-container">
+              <label>Assigned users</label>
+              <button
+                type="button"
+                className="input-button"
+                onClick={() => setIsParticipantModalOpen(true)}>
+                <Search className="icon" />
+                Add participant
+              </button>
+            </div>
+            <table className="participant-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {participants.map((participant, index) => (
+                  <tr key={index}>
+                    <td>{participant.name}</td>
+                    <td>{participant.department}</td>
+                    <td>{participant.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <div className="form-right">
           <div className="form-group">
@@ -225,7 +259,8 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
           </div>
         </div>
       </form>
-      {isModalOpen && <SupplierLookupModal onClose={() => setIsModalOpen(false)} onSelect={handleSelectSupplier} />}
+      {isSupplierModalOpen && <SupplierLookupModal onSelectSupplier={handleSelectSupplier} onClose={() => setIsSupplierModalOpen(false)} />}
+      {isParticipantModalOpen && <ParticipantLookupModal onAddParticipant={handleAddParticipant} onClose={() => setIsParticipantModalOpen(false)} />}
     </>
   );
 };
