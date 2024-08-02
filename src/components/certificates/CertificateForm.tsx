@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { addCertificate, updateCertificate } from "../../DB/indexedDB";
+import { addCertificate, updateCertificate, getCertificates } from "../../DB/indexedDB";
 import { useNavigate } from 'react-router';
 import "../../styles/NewCertificate.css";
 import Search from '../../icons/search';
 import X from '../../icons/x';
-import { getCertificates } from "../../DB/indexedDB";
 import SupplierLookupModal from '../SupplierLookupModal';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -23,7 +22,6 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
     certificateType: '',
     validFrom: '',
     validTo: '',
-    id: Date.now(),
     pdfFile: null as string | null,
     pdfPreview: '' as string | null,
   });
@@ -34,22 +32,21 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
     if (isEdit && certificateId) {
       async function fetchData() {
         const certificates = await getCertificates();
-        const filteredCertificate = certificates.filter((certificate) => certificate.id === certificateId);
-        filteredCertificate.map((certificate) => (
+        const filteredCertificate = certificates.find((certificate) => certificate.id === certificateId);
+        if (filteredCertificate) {
           setFormData({
-            validFrom: certificate.validFrom ? certificate.validFrom : '',
-            validTo: certificate.validTo ? certificate.validTo : '',
-            certificateType: certificate.certificateType,
-            supplier: certificate.supplier,
-            pdfFile: certificate.pdfFile || null,
-            pdfPreview: certificate.pdfPreview || null,
-            id: certificateId || Date.now(),
-          })
-        ));
+            validFrom: filteredCertificate.validFrom || '',
+            validTo: filteredCertificate.validTo || '',
+            certificateType: filteredCertificate.certificateType,
+            supplier: filteredCertificate.supplier,
+            pdfFile: filteredCertificate.pdfFile || null,
+            pdfPreview: filteredCertificate.pdfFile || null,
+          });
+        }
       }
       fetchData();
     }
-  }, [certificateId]);
+  }, [isEdit, certificateId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -73,6 +70,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
         if (reader.result) {
           setFormData({
             ...formData,
+            pdfFile: reader.result as string,
             pdfPreview: reader.result as string,
           });
         }
@@ -82,15 +80,17 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
       alert(translations['invalidFileError']);
     }
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.pdfPreview) {
       setError(translations['pdfRequiredError']);
       return;
     }
+    setError(null);
+
     try {
-      if(certificateId && isEdit){
-        console.log("edit clicked");
+      if (certificateId && isEdit) {
         await updateCertificate({
           supplier: formData.supplier,
           certificateType: formData.certificateType,
@@ -105,19 +105,18 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
           validFrom: formData.validFrom,
           validTo: formData.validTo,
           pdfFile: formData.pdfFile,
-          id: formData.id,
+          id: 0
         });
       }
       navigate('/example1');
       handleReset();
     } catch (error) {
-      setError('An error occurred while saving the certificate.'); 
+      setError('An error occurred while saving the certificate.');
     }
   };
 
   const handleReset = () => {
     setFormData({
-      id: Date.now(),
       supplier: '',
       certificateType: '',
       validFrom: '',
@@ -145,10 +144,10 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
             <div className="input-container">
               <input
                 type="text" readOnly
-                name="supplier" 
-                value={formData.supplier} 
-                required 
-                className="input-field" 
+                name="supplier"
+                value={formData.supplier}
+                required
+                className="input-field"
               />
               <Search className="icon" onClick={() => setIsModalOpen(true)} />
               <X className="icon" onClick={() => setFormData({ ...formData, supplier: '' })} />
@@ -156,9 +155,9 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
           </div>
           
           <div className="form-group">
-            <label htmlFor="certificateType">Certificate Type</label>
+            <label htmlFor="certificateType">{translations['certificateType']}</label>
             <select name="certificateType" value={formData.certificateType} onChange={handleChanges} required>
-              <option value="">Select your option</option>
+              <option value="">{translations['selectyouroption']}</option>
               <option value="Permission of printing">Permission of printing</option>
               <option value="OHSAS 18001">OHSAS 18001</option>
               <option value="Attendance">Attendance</option>
@@ -169,13 +168,14 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
           <div className="form-group">
             <label>{translations['validFrom']}</label>
             <input
-              type="text" required
-              placeholder='Click to select date'
+              type="text"
+              placeholder={translations['clickToSelectDate']}
               ref={validFromRef}
               name="validFrom"
               value={formData.validFrom}
               onChange={handleChange}
               onFocus={() => { validFromRef.current!.type = "date"; }}
+              required
             />
           </div>
 
@@ -183,7 +183,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
             <label>{translations['validTo']}</label>
             <input
               type="text"
-              placeholder="Click to select date"
+              placeholder={translations['clickToSelectDate']}
               ref={validToRef}
               name="validTo"
               value={formData.validTo}
@@ -198,7 +198,7 @@ const CertificateForm: React.FC<ICertificateForm> = ({ isEdit, certificateId }: 
 
         <div className="form-right">
           <div className="form-group">
-            <input type="file" name="pdfFile" accept="application/pdf" onChange={handleFileChange} required style={{ display: 'none' }} />
+            <input type="file" name="pdfFile" accept="application/pdf" onChange={handleFileChange} style={{ display: 'none' }} />
             <button type="button" className="upload-button" onClick={() => {
               const fileInput = document.querySelector('input[name="pdfFile"]') as HTMLInputElement;
               fileInput?.click();

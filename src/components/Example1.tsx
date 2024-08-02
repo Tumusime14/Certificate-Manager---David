@@ -50,8 +50,7 @@ const Example1: React.FC = () => {
       onDelete={() => handleDelete(row.id)}
     />
   )};
-
-  const headers = ['Supplier', 'Certificate Type', 'Valid From', 'Valid To'];
+  const headers = [translations['supplier'], translations['certificateType'], translations['validFrom'], translations['validTo']];
 
   const tableData = certificates.map((certificate) => ({
     supplier: certificate.supplier,
