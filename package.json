@@ -22,8 +22,11 @@
   "license": "ISC",
   "dependencies": {
     "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
+    "i18next": "^23.12.2",
+    "i18next-browser-languagedetector": "^8.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.0.0",
     "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
@@ -57,4 +60,3 @@
     "url": "https://github.com/Tumusime14/Certificate-Manager---David.git"
   }
 }
-

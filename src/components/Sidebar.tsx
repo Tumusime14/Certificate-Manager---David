@@ -4,14 +4,21 @@ import "../styles/Sidebar.css";
 import Home from "../icons/home";
 import Menu from "../icons/menu";
 import Down from "../icons/down";
+import { useLanguage } from "./context/LanguageContext";
 
-const menuItems = [
+interface MenuItem {
+  title: string;
+  path: string;
+}
+
+const menuItems: MenuItem[] = [
   { title: "Example 1", path: "/example1" },
   { title: "Example 2", path: "/example2" },
   { title: "Example 3", path: "/example3" },
 ];
 
 const Sidebar: React.FC = () => {
+  const { translations } = useLanguage();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -32,19 +39,21 @@ const Sidebar: React.FC = () => {
   return (
     <div className="sidebar">
       <div className="menu-item" onClick={handleStartClick}>
-        <Home /> Start
+        <Home /> {translations['start']}
       </div>
       <div className="menu-item" onClick={handleDropdownClick}>
-        <Menu /> Machine Learning <Down className={`downicon ${isExpanded ? "rotated" : ""}`} />
+        <Menu /> {translations['machinelearning']}
+        <Down className={`downicon ${isExpanded ? "rotated" : ""}`} />
       </div>
       {showDropdown && (
         <div className="dropdown">
-          {menuItems.map(item => (
+          {menuItems.map((item: MenuItem) => (
             <div
               key={item.title}
               className="dropdown-item"
-              onClick={() => handleItemClick(item.path)} >
-              {item.title}
+              onClick={() => handleItemClick(item.path)}
+            >
+              {translations[item.title.toLowerCase().replace(/ /g, '')]}
             </div>
           ))}
         </div>

@@ -5,10 +5,12 @@ import GearIcon from '../icons/gear';
 import Table from './Table';
 import '../styles/Table.css';
 import { useNavigate } from 'react-router';
+import { useLanguage } from './context/LanguageContext';
 
 const Example1: React.FC = () => {
   const navigate = useNavigate();
   const [certificates, setCertificates] = useState<any[]>([]);
+  const { translations } = useLanguage();
 
   useEffect(() => {
     async function fetchData() {
@@ -48,8 +50,7 @@ const Example1: React.FC = () => {
       onDelete={() => handleDelete(row.id)}
     />
   )};
-
-  const headers = ['Supplier', 'Certificate Type', 'Valid From', 'Valid To'];
+  const headers = [translations['supplier'], translations['certificateType'], translations['validFrom'], translations['validTo']];
 
   const tableData = certificates.map((certificate) => ({
     supplier: certificate.supplier,

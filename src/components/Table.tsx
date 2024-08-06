@@ -34,7 +34,7 @@ const Table: FC<TableProps> = ({
           {headers.map((header, index) => (
             <th key={index}>{header}</th>
           ))}
-          {renderRowActions && <th className="hidden-column"></th>}
+          {renderRowActions && <span className="hidden-column"></span>}
         </tr>
       </thead>
       <tbody>
@@ -54,9 +54,10 @@ const Table: FC<TableProps> = ({
                 />
               </td>
             )}
-            {Object.values(row).map((value, i) => (
-              <td key={i}>{isNaN(value) ? value : null}</td>
-            ))}
+            {Object.entries(row).map(([key, value], i) => {
+  if (key === 'id') return null;
+  return <td key={i}>{isNaN(value) ? value : null}</td>;
+})}
           </tr>
         ))}
       </tbody>
